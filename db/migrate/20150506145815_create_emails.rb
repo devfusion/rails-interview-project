@@ -1,7 +1,6 @@
 class CreateEmails < ActiveRecord::Migration
   def change
     create_table :emails do |t|
-      t.integer :id
       t.string :address
       t.integer :user_id
 
