@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
   def show
+    flash[:error] = ''
     @group = Group.includes(:users).find(params[:group_id])
     @user = @group.users.find(params[:id])
   end
@@ -16,7 +17,8 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to group_path(@group)
     else
-      redirect_to group_path(@group)
+      flash[:error] = @user.errors.full_messages
+      render 'new'
     end
   end
 
@@ -28,8 +30,12 @@ class UsersController < ApplicationController
   def update
     @group = Group.includes(:users).find(params[:group_id])
     @user = @group.users.find(params[:id])
-    @user.update_attributes(permitted_params)
-    redirect_to group_path(@group)
+    if @user.update_attributes(permitted_params)
+      redirect_to group_path(@group)
+    else
+      flash[:error] = @user.errors.full_messages
+      render 'edit'
+    end
   end
 
   def destroy

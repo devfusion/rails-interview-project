@@ -1,9 +1,11 @@
 class GroupsController < ApplicationController
   def index
+    flash[:error] = ''
     @groups = Group.all
   end
 
   def show
+    flash[:error] = ''
     @group = Group.find(params[:id])
   end
 
@@ -16,7 +18,8 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to root_path
     else
-      redirect_to root_path
+      flash[:error] = @group.errors.full_messages
+      render 'new'
     end
   end
 
@@ -26,8 +29,12 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.find(params[:id])
-    @group.update_attributes(permitted_params)
-    redirect_to root_path
+    if @group.update_attributes(permitted_params)
+      redirect_to root_path
+    else
+      flash[:error] = @group.errors.full_messages
+      render 'edit'
+    end
   end
 
   def destroy

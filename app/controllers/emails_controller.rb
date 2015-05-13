@@ -9,8 +9,12 @@ class EmailsController < ApplicationController
     @group = Group.includes(:users).find(params[:group_id])
     @user = @group.users.find(params[:user_id])
     @email = @user.emails.build(permitted_params)
-    @email.save
-    redirect_to group_user_path(@group, @user)
+    if @email.save
+      redirect_to group_user_path(@group, @user)
+    else
+      flash[:error] = @email.errors.full_messages
+      render 'new'
+    end
   end
 
   def edit
@@ -23,8 +27,12 @@ class EmailsController < ApplicationController
     @group = Group.includes(:users => [:emails]).find(params[:group_id])
     @user = @group.users.find(params[:user_id])
     @email = @user.emails.find(params[:id])
-    @email.update_attributes(permitted_params)
-    redirect_to group_user_path(@group, @user)
+    if @email.update_attributes(permitted_params)
+      redirect_to group_user_path(@group, @user)
+    else
+      flash[:error] = @email.errors.full_messages
+      render 'edit'
+    end
   end
 
   def destroy
