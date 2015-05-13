@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root to: 'groups#index'
 
-  resources :reports, :only => [:index]
+  resources :reports, :only => [:index] do 
+    collection do
+      get 'all_reports'
+      get 'group_reports/:id', :action => 'group_reports'
+    end
+  end
   resources :groups do
     resources :users do
       resources :emails, :except => [:show]

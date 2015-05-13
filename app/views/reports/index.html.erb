@@ -1,9 +1,13 @@
 <div class="row">
   <div class="col-lg-3">
-    <div class="well sidebar-nav">
+    <div class="well sidebar-nav reports">
       <h3><%= link_to 'Reports', reports_path %></h3>
       <ul class="nav nav-list">
         <li class="nav-header"></li>
+        <li><%= link_to "All", all_reports_reports_path()  %></li>
+        <% @groups.each do |group| %>
+          <li><%= link_to "#{group.name}", "/reports/group_reports/#{group.id}"  %></li>
+        <% end %>
       </ul>
     </div><!--/.well -->
   </div><!--/span-->
