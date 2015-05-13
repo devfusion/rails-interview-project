@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-lg-3">
+    <div class="well sidebar-nav">
+      <h3><%= link_to "#{@group.name}", group_path(@group) %></h3>
+      <ul class="nav nav-list">
+        <li class="nav-header"><%= @user.name %></li>
+      </ul>
+    </div><!--/.well -->
+  </div><!--/span-->
+  <div class="col-lg-9">
+    <%= form_for [@group, @user] do |f| %>
+      <div class="row">
+        <div class="col-lg-3">
+          User Name
+        </div>
+        <div class="col-lg-1">:</div>
+        <div class="col-lg-4">
+          <%= f.text_field :name %>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-3">
+          <%= f.submit 'Update' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

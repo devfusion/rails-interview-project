@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-lg-3">
+    <div class="well sidebar-nav">
+      <h3><%= link_to 'Groups', groups_path %></h3>
+      <ul class="nav nav-list">
+        <li class="nav-header"><%= @group.name %></li>
+        <li><%#= link_to "Link1", "/path1"  %></li>
+        <li><%#= link_to "Link2", "/path2"  %></li>
+        <li><%#= link_to "Link3", "/path3"  %></li>
+      </ul>
+    </div><!--/.well -->
+  </div><!--/span-->
+  <div class="col-lg-9">
+    <table id="users" class="display datatable table" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>User</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @group.users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td>
+            <div class="row">
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-eye-open'></i>".html_safe, group_user_path(@group.id, user.id) %>
+              </div>
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-pencil'></i>".html_safe, edit_group_user_path(@group.id, user.id) %>
+              </div>
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-minus'></i>".html_safe, group_user_path(@group.id, user.id), method: :delete, data: {confirm: "You sure?"} %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <% end if @group.users.present? %>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-lg-2 col-lg-offset-10">
+        <%= link_to "Add User", new_group_user_path(@group), id: "new_user", class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-lg-12">
+    <table id="groups" class="display datatable table" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Group</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @groups.each do |group| %>
+        <tr>
+          <td><%= group.id %></td>
+          <td><%= group.name %></td>
+          <td>
+            <div class="row">
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-eye-open'></i>".html_safe, group_path(group.id) %>
+              </div>
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-pencil'></i>".html_safe, edit_group_path(group.id) %>
+              </div>
+              <div class="col-lg-1">
+                <%= link_to "<i class='glyphicon glyphicon-minus'></i>".html_safe, group_path(group), method: :delete, data: {confirm: "You sure?"} %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <% end if @groups.present? %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-2 col-lg-offset-10">
+    <%= link_to "Add Group", new_group_path, id: "new_group", class: "btn btn-default" %>
+  </div>
+</div>
