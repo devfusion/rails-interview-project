@@ -1,12 +1,15 @@
-require 'rails_helper'
-
-describe Group do
-  before do
-    @group = FactoryGirl.build(:group)
+require 'spec_helper'
+ 
+describe Group, :type => :model do
+ 
+  describe 'Associations' do
+    it { is_expected.to have_many(:users) }
   end
-
-  it "has a valid factory" do
-    expect(@group).to be_valid
+ 
+  describe 'Validations' do
+    [:name].each do |field|
+      it { is_expected.to validate_presence_of(field) }
+    end
   end
 
 end
